@@ -1,9 +1,0 @@
-const WA="628979517541"; document.getElementById("year").textContent=new Date().getFullYear();
-function toggleTheme(){document.body.classList.toggle("light");localStorage.setItem("ghofTheme",document.body.classList.contains("light")?"light":"dark")}
-if(localStorage.getItem("ghofTheme")==="light")document.body.classList.add("light");
-function chat(msg){window.open("https://wa.me/"+WA+"?text="+encodeURIComponent(msg),"_blank")}
-function courseChat(pkg){chat("Halo Admin GHOF KNOWLEDGE, saya ingin mendaftar "+pkg+". Mohon informasi metode pembayaran dan langkah pendaftarannya.");}
-function serviceChat(){chat("Halo Admin GHOF KNOWLEDGE, saya ingin konsultasi jasa pembuatan website. Mohon informasi paket dan harganya.");}
-document.getElementById("feedbackForm").addEventListener("submit",e=>{e.preventDefault();let n=document.getElementById("fName").value,m=document.getElementById("fMessage").value,em=document.getElementById("fEmail").value;chat("Halo Admin GHOF KNOWLEDGE. Saya "+n+" ("+em+"). Saran/masukan: "+m);});
-function renderEbooks(){let data=JSON.parse(localStorage.getItem("ghofEbooks")||"[]");let el=document.getElementById("ebookList");if(!data.length){el.innerHTML='<article class="ebook"><h3>Ebook akan segera tersedia</h3><p>Admin dapat menambahkan ebook melalui admin panel.</p></article>';return}el.innerHTML=data.map((x,i)=>`<article class="ebook">${x.img?`<img src="${x.img}" alt="">`:""}<h3>${x.best?"🔥 ":""}${x.title}</h3><p>${x.price||"Hubungi admin"}</p><button class="btn primary" onclick="chat('Halo Admin, saya ingin membeli ebook: ${x.title}')">Beli / Hubungi Admin</button></article>`).join("")}
-renderEbooks();
