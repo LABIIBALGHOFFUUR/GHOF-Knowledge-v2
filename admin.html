@@ -333,35 +333,14 @@
     let data = getSiteData();
 
     // Kompres gambar otomatis agar ukuran file tetap ringan untuk localStorage & GitHub
-    function compressImageFile(file, maxWidth = 800, quality = 0.8) {
+    // Fungsi pembacaan foto langsung yang andal dan tidak pilih-pilih file
+    function compressImageFile(file) {
       return new Promise((resolve) => {
         if (!file) return resolve("");
         const reader = new FileReader();
         reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            try {
-              const canvas = document.createElement("canvas");
-              let w = img.width, h = img.height;
-              if (w > maxWidth) {
-                h = Math.round((h * maxWidth) / w);
-                w = maxWidth;
-              }
-              canvas.width = w;
-              canvas.height = h;
-              const ctx = canvas.getContext("2d");
-              ctx.drawImage(img, 0, 0, w, h);
-              resolve(canvas.toDataURL("image/jpeg", quality));
-            } catch (err) {
-              console.warn("Canvas compression failed, fallback to raw base64", err);
-              resolve(e.target.result);
-            }
-          };
-          img.onerror = () => {
-            // Jika gambar gagal dimuat canvas, langsung kembalikan base64 mentah
-            resolve(e.target.result);
-          };
-          img.src = e.target.result;
+          // Langsung kembalikan hasil pembacaan file (Base64) tanpa manipulasi canvas yang berisiko gagal
+          resolve(e.target.result);
         };
         reader.onerror = () => resolve("");
         reader.readAsDataURL(file);
