@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GHOF KNOWLEDGE</title>
+<meta name="description" content="GHOF KNOWLEDGE — kursus bahasa Rusia, ebook, dan jasa pembuatan website.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="announcement">✦ GHOF KNOWLEDGE — Empowering Learning • Unlocking Potential ✦</div>
+<header class="site-header">
+  <a class="brand" href="#beranda"><img src="assets/logo.jpg" alt="GHOF Knowledge"></a>
+  <nav id="nav">
+    <a href="#beranda">Beranda</a>
+    <a href="#kursus">Kursus</a>
+    <a href="#ebook">Ebook</a>
+    <a href="#jasa">Jasa Website</a>
+    <a href="#faq">FAQ</a>
+    <a href="#about">About</a>
+    <a href="#saran">Saran & Masukan</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+  <button class="theme" onclick="toggleTheme()" aria-label="Mode terang/gelap">☀︎ / ☾</button>
+</header>
+
+<main>
+<section id="beranda" class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">GHOF KNOWLEDGE</span>
+    <h1>Belajar. Berkembang.<br><span>Melangkah Lebih Jauh.</span></h1>
+    <p>Platform belajar dan layanan digital untuk kamu yang ingin meningkatkan kemampuan bahasa, mendapatkan materi belajar, dan membangun website profesional.</p>
+    <div class="actions">
+      <a class="btn primary" href="#kursus">Lihat Kursus</a>
+      <a class="btn ghost" href="#jasa">Buat Website</a>
+    </div>
+  </div>
+  <div class="hero-card">
+    <img src="assets/logo.jpg" alt="Logo GHOF Knowledge">
+    <div><strong>GHOF KNOWLEDGE</strong><small>Empowering Learning • Unlocking Potential</small></div>
+  </div>
+</section>
+
+<section class="stats">
+  <div><b>01</b><span>Kursus Bahasa Rusia</span></div>
+  <div><b>02</b><span>Ebook Pembelajaran</span></div>
+  <div><b>03</b><span>Jasa Pembuatan Website</span></div>
+  <div><b>04</b><span>Mentoring & Support</span></div>
+</section>
+
+<section id="kursus" class="section">
+  <div class="section-head"><span class="eyebrow">KURSUS</span><h2>GHOF Russian Class</h2><p>Informasi kursus disusun berdasarkan foto referensi yang kamu kirim. Foto tersebut digunakan sebagai visual kursus, bukan sebagai isi materi website.</p></div>
+  <div class="course-layout">
+    <div class="course-image"><img src="assets/kursus.jpg" alt="GHOF Russian Class"></div>
+    <div class="course-content">
+      <div class="notice">🇷🇺 Bahasa Baru, Peluang Baru</div>
+      <h3>Belajar Bahasa Rusia dari Sekarang</h3>
+      <p>Kelas tersedia dalam pilihan <b>gratis</b> dan <b>berbayar</b>. Program berbayar pada materi promosi mencantumkan harga pembukaan Rp39.000/bulan, minimal berlangganan 3 bulan, total promo Rp117.000/3 bulan, dan harga normal Rp59.000/bulan setelah masa promo.</p>
+      <div class="course-grid">
+        <article class="mini"><h4>FREE RUSSIAN CLASS</h4><p>Materi dasar, ebook materi dasar (PDF), grup belajar WhatsApp terbatas, latihan sederhana, dan tanya jawab dasar.</p><button onclick="courseChat('FREE RUSSIAN CLASS')">Daftar Gratis →</button></article>
+        <article class="mini featured"><h4>PREMIUM RUSSIAN CLASS</h4><p>Materi lebih lengkap, modul A1–Lanjutan, audio, latihan, koreksi tugas, pendampingan mentor, grup premium, sesi tanya jawab, dan sertifikat penyelesaian.</p><button onclick="courseChat('PREMIUM RUSSIAN CLASS')">Daftar Berbayar →</button></article>
+      </div>
+      <ul class="ticks">
+        <li>Alfabet Rusia (Кириллица)</li><li>Membaca dan pengucapan</li><li>Kosakata sehari-hari</li><li>Salam dan perkenalan</li><li>Percakapan dasar</li><li>Tata bahasa dasar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="ebook" class="section alt">
+  <div class="section-head"><span class="eyebrow">EBOOK</span><h2>Materi belajar pilihanmu</h2><p>Daftar ebook dapat kamu atur sendiri melalui admin panel.</p></div>
+  <div id="ebookList" class="cards"></div>
+</section>
+
+<section id="jasa" class="section">
+  <div class="section-head"><span class="eyebrow">JASA WEBSITE</span><h2>Website sesuai kebutuhan</h2><p>Kami dapat membantu membuat website sekolah, toko/penjualan, portofolio, profil usaha, landing page, dan website custom lainnya.</p></div>
+  <div class="service-grid">
+    <article><span>01</span><h3>Website Sekolah</h3><p>Profil sekolah, informasi akademik, pengumuman, galeri, kontak, dan halaman informasi.</p></article>
+    <article><span>02</span><h3>Website Jualan</h3><p>Landing page produk, katalog, tombol order WhatsApp, promo, dan informasi pembayaran.</p></article>
+    <article><span>03</span><h3>Portfolio</h3><p>Tampilkan karya, pengalaman, layanan, profil, dan kontak dengan tampilan profesional.</p></article>
+    <article><span>04</span><h3>Custom Website</h3><p>Konsep dan tampilan dapat disesuaikan dengan kebutuhan kamu.</p></article>
+  </div>
+  <div class="center"><button class="btn primary" onclick="serviceChat()">Konsultasi Pembuatan Website</button></div>
+</section>
+
+<section id="faq" class="section alt">
+  <div class="section-head"><span class="eyebrow">FAQ</span><h2>Pertanyaan yang sering ditanyakan</h2></div>
+  <div class="faq">
+    <details><summary>Bagaimana cara daftar kursus?</summary><p>Pilih paket kursus, pilih metode pembayaran, lalu lanjutkan chat admin melalui WhatsApp untuk mendapatkan informasi pembayaran dan pendaftaran.</p></details>
+    <details><summary>Apakah ada kelas gratis?</summary><p>Ya. Tersedia FREE RUSSIAN CLASS dengan fasilitas dasar.</p></details>
+    <details><summary>Bagaimana membeli ebook?</summary><p>Pilih ebook, pilih metode pembayaran, kemudian lanjutkan chat admin untuk mendapatkan instruksi pembayaran.</p></details>
+    <details><summary>Website apa saja yang bisa dibuat?</summary><p>Contohnya website sekolah, website jualan, portfolio, company/profile usaha, landing page, dan website custom.</p></details>
+    <details><summary>Apakah metode pembayaran bisa berubah?</summary><p>Ya. Daftar metode pembayaran dapat dikelola melalui admin panel.</p></details>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="section-head"><span class="eyebrow">ABOUT</span><h2>Tentang GHOF KNOWLEDGE</h2></div>
+  <div class="about-grid">
+    <div class="about-copy">
+      <h3>Pendidikan, keterampilan, dan layanan digital dalam satu tempat.</h3>
+      <p>GHOF KNOWLEDGE dibangun untuk menghadirkan pengalaman belajar yang praktis sekaligus membantu individu, pelajar, dan pemilik usaha mendapatkan solusi digital yang rapi dan profesional.</p>
+      <h4>Visi</h4><p>Menjadi platform pembelajaran dan layanan digital yang membantu lebih banyak orang berkembang, berkarya, dan membuka peluang baru.</p>
+      <h4>Misi</h4><p>Menyediakan pembelajaran yang mudah diakses, materi yang terarah, layanan website yang profesional, serta komunikasi yang cepat dan transparan.</p>
+    </div>
+    <div class="owner-card">
+      <img src="assets/ceo.png" alt="LABIIB AL GHOFFUUR">
+      <div><span>PEMILIK / PENCIPTA / CEO</span><h3>LABIIB AL GHOFFUUR</h3><p>Mntr.Br, Bs, Bt</p><small>Mentor Bahasa Rusia, Bahasa Spanyol & Bahasa Turki</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="saran" class="section alt">
+  <div class="section-head"><span class="eyebrow">SARAN & MASUKAN</span><h2>Bantu kami menjadi lebih baik</h2><p>Isi nama, Gmail, dan saranmu. Tombol kirim akan membuka WhatsApp admin dengan pesan yang sudah disiapkan.</p></div>
+  <form id="feedbackForm" class="form">
+    <input id="fName" required placeholder="Nama">
+    <input id="fEmail" required type="email" placeholder="Gmail">
+    <textarea id="fMessage" required rows="5" placeholder="Saran dan masukan"></textarea>
+    <button class="btn primary">Hubungi Admin via WhatsApp</button>
+  </form>
+</section>
+
+<section id="kontak" class="section">
+  <div class="section-head"><span class="eyebrow">KONTAK & MEDIA SOSIAL</span><h2>Terhubung dengan GHOF KNOWLEDGE</h2></div>
+  <div class="contact-grid">
+    <a href="https://wa.me/628979517541" target="_blank"><b>WhatsApp</b><span>08979517541</span></a>
+    <a href="https://instagram.com/xiaobi_03" target="_blank"><b>Instagram</b><span>@xiaobi_03</span></a>
+    <a href="mailto:anakbahasainternational@gmail.com"><b>Gmail</b><span>anakbahasainternational@gmail.com</span></a>
+  </div>
+</section>
+</main>
+
+<footer><img src="assets/logo.jpg" alt=""><span>© <span id="year"></span> GHOF KNOWLEDGE</span><a href="admin.html">Admin</a></footer>
+<script src="script.js"></script>
+</body>
+</html>

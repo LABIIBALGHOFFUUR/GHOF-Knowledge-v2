@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — GHOF KNOWLEDGE</title><link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+<div id="login" class="login">
+  <img src="assets/logo.jpg" alt="GHOF">
+  <h1>Admin Panel</h1><p>GHOF KNOWLEDGE</p>
+  <input id="pass" type="password" placeholder="Password admin">
+  <button class="btn primary" onclick="loginAdmin()">Masuk</button>
+  <small>Panel ini adalah halaman terpisah dari website utama.</small>
+</div>
+<div id="panel" class="panel hidden">
+  <header class="admin-head"><div><b>GHOF KNOWLEDGE</b><span> / Admin Panel</span></div><button class="btn ghost" onclick="logoutAdmin()">Keluar</button></header>
+  <div class="admin-wrap">
+    <aside>
+      <button class="tab active" data-tab="course">Kelola Kursus</button>
+      <button class="tab" data-tab="ebook">Kelola Ebook</button>
+      <button class="tab" data-tab="service">Kelola Jasa Website</button>
+      <button class="tab" data-tab="payment">Metode Pembayaran</button>
+      <button class="tab" data-tab="contact">Kontak & Sosial</button>
+      <button class="tab" data-tab="owner">Pemilik / CEO</button>
+      <button class="tab" data-tab="rating">Rating & Testimoni</button>
+      <button class="tab" data-tab="announce">Pengumuman</button>
+    </aside>
+    <section class="admin-content">
+      <div id="course" class="tab-content active">
+        <h2>Kelola Kursus</h2><p>Edit informasi paket kursus, harga, deskripsi, dan tombol hubungi admin.</p>
+        <label>Nama kelas <input value="GHOF Russian Class"></label>
+        <label>Harga promo <input id="coursePrice" value="Rp39.000/bulan"></label>
+        <label>Deskripsi <textarea id="courseDesc">Kelas gratis dan berbayar dengan materi bahasa Rusia, latihan, pendampingan, dan sertifikat untuk program berbayar.</textarea></label>
+        <button class="btn primary" onclick="saveField('course')">Simpan</button>
+      </div>
+      <div id="ebook" class="tab-content">
+        <h2>Kelola Ebook</h2>
+        <form id="ebookForm" class="form compact"><input id="eTitle" required placeholder="Judul ebook"><input id="ePrice" placeholder="Harga"><input id="eImg" placeholder="Nama file gambar, mis. assets/ebook.jpg"><label class="check"><input id="eBest" type="checkbox"> Tandai terlaris</label><button class="btn primary">Tambah Ebook</button></form>
+        <div id="adminEbooks"></div>
+      </div>
+      <div id="service" class="tab-content">
+        <h2>Kelola Jasa Pembuatan Website</h2>
+        <label>Deskripsi <textarea id="serviceDesc">Jasa pembuatan website sekolah, jualan, portfolio, profil usaha, landing page, dan custom.</textarea></label>
+        <label>Harga mulai <input id="servicePrice" value="Hubungi admin"></label>
+        <button class="btn primary" onclick="saveField('service')">Simpan</button>
+      </div>
+      <div id="payment" class="tab-content">
+        <h2>Kelola Metode Pembayaran</h2>
+        <form id="payForm" class="form compact"><input id="pName" required placeholder="Nama metode"><input id="pNumber" placeholder="Nomor/rekening"><button class="btn primary">Tambah</button></form>
+        <div id="payments"></div><p class="muted">QRIS dapat dikelola dengan menambahkan gambar QRIS ke folder assets dan memasukkan path-nya pada data website.</p>
+      </div>
+      <div id="contact" class="tab-content">
+        <h2>Kelola Kontak & Media Sosial</h2>
+        <label>WhatsApp <input id="wa" value="08979517541"></label>
+        <label>Instagram <input id="ig" value="xiaobi_03"></label>
+        <label>Gmail <input id="mail" value="anakbahasainternational@gmail.com"></label>
+        <button class="btn primary" onclick="saveField('contact')">Simpan</button>
+      </div>
+      <div id="owner" class="tab-content">
+        <h2>Kelola Pemilik / Pencipta / CEO</h2>
+        <label>Nama <input id="ownerName" value="LABIIB AL GHOFFUUR"></label>
+        <label>Gelar <input id="ownerTitle" value="Mntr.Br, Bs, Bt"></label>
+        <label>Deskripsi <textarea id="ownerDesc">Mentor Bahasa Rusia, Bahasa Spanyol & Bahasa Turki. Membangun GHOF KNOWLEDGE sebagai ruang belajar dan pengembangan keterampilan.</textarea></label>
+        <label>Tujuan <textarea>Memudahkan masyarakat mendapatkan pembelajaran dan layanan digital yang bermanfaat.</textarea></label>
+        <button class="btn primary" onclick="saveField('owner')">Simpan</button>
+      </div>
+      <div id="rating" class="tab-content">
+        <h2>Kelola Rating & Testimoni</h2>
+        <p>Contoh testimoni dapat diubah atau dihapus dari browser ini.</p>
+        <form id="reviewForm" class="form compact"><input id="rName" placeholder="Nama"><select id="rStars"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select><textarea id="rText" placeholder="Komentar"></textarea><button class="btn primary">Tambah</button></form>
+        <div id="reviews"></div>
+      </div>
+      <div id="announce" class="tab-content">
+        <h2>Pengumuman</h2>
+        <label>Isi pengumuman <textarea id="announcement">Promo pembukaan GHOF Russian Class tersedia. Hubungi admin untuk pendaftaran.</textarea></label>
+        <button class="btn primary" onclick="saveField('announce')">Simpan</button>
+      </div>
+    </section>
+  </div>
+</div>
+<script src="admin.js"></script>
+</body>
+</html>
