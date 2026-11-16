@@ -150,6 +150,9 @@
         <label>Teks Pengumuman Berjalan</label>
         <textarea id="annText" rows="3" class="form-control"></textarea>
       </div>
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:12px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Pengumuman
+      </button>
     </div>
 
     <!-- TAB 2: KURSUS -->
@@ -276,6 +279,9 @@
         <label>Misi (Pisahkan tiap poin dengan baris baru)</label>
         <textarea id="ownerMission" rows="4" class="form-control"></textarea>
       </div>
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:12px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Profil CEO
+      </button>
     </div>
 
     <!-- TAB 8: RATING & ULASAN -->
@@ -333,14 +339,37 @@
     let data = getSiteData();
 
     // Kompres gambar otomatis agar ukuran file tetap ringan untuk localStorage & GitHub
-    // Fungsi pembacaan foto langsung yang andal dan tidak pilih-pilih file
-    function compressImageFile(file) {
+    // Fungsi kompresi gambar otomatis yang aman & super ringan (mencegah LocalStorage penuh/QuotaExceeded)
+    function compressImageFile(file, maxWidth = 600, quality = 0.72) {
       return new Promise((resolve) => {
         if (!file) return resolve("");
         const reader = new FileReader();
         reader.onload = (e) => {
-          // Langsung kembalikan hasil pembacaan file (Base64) tanpa manipulasi canvas yang berisiko gagal
-          resolve(e.target.result);
+          const img = new Image();
+          img.onload = () => {
+            try {
+              const canvas = document.createElement("canvas");
+              let w = img.width, h = img.height;
+              if (w > maxWidth) {
+                h = Math.round((h * maxWidth) / w);
+                w = maxWidth;
+              }
+              canvas.width = w;
+              canvas.height = h;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, w, h);
+              // Ekspor ke jpeg terkompresi ringan
+              const dataUrl = canvas.toDataURL("image/jpeg", quality);
+              resolve(dataUrl);
+            } catch (err) {
+              console.warn("Canvas resize error, fallback to original", err);
+              resolve(e.target.result);
+            }
+          };
+          img.onerror = () => {
+            resolve(e.target.result);
+          };
+          img.src = e.target.result;
         };
         reader.onerror = () => resolve("");
         reader.readAsDataURL(file);
@@ -381,18 +410,43 @@
 
       // 2. Kursus
       renderAdminCourses();
+    document.getElementById("adminCoursesList").insertAdjacentHTML('beforeend', `
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kursus
+      </button>
+    `);
 
       // 3. E-Book
       renderAdminEbooks();
+    document.getElementById("adminEbooksList").insertAdjacentHTML('beforeend', `
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan E-Book
+      </button>
+    `);
 
       // 4. Jasa Web
       renderAdminWeb();
+    document.getElementById("adminWebList").insertAdjacentHTML('beforeend', `
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Jasa Website
+      </button>
+    `);
 
       // 5. Pembayaran
       renderAdminPayments();
+    document.getElementById("adminPaymentsList").insertAdjacentHTML('beforeend', `
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Pembayaran
+      </button>
+    `);
 
       // 6. Kontak
       renderAdminContacts();
+    document.getElementById("adminContactsList").insertAdjacentHTML('beforeend', `
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kontak
+      </button>
+    `);
 
       // 7. Pemilik / CEO
       document.getElementById("ownerName").value = data.owner.name;
@@ -410,6 +464,11 @@
 
       // 8. Ulasan
       renderAdminReviews();
+    document.getElementById("adminReviewsList").insertAdjacentHTML('beforeend', `
+      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Ulasan
+      </button>
+    `);
     }
 
     function renderAdminCourses() {
@@ -683,11 +742,18 @@
       data.owner.mission = document.getElementById("ownerMission").value.split("\n").map(s => s.trim()).filter(Boolean);
     }
 
-    document.getElementById("saveLocalBtn").onclick = () => {
-      syncFormFieldsToData();
-      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-      alert("Berhasil disimpan di browser! Buka index.html untuk melihat hasilnya.");
-    };
+    function saveChangesAndAlert() {
+      try {
+        syncFormFieldsToData();
+        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
+        alert("✅ Berhasil disimpan! Perubahan pada bagian ini telah tersimpan.");
+      } catch (err) {
+        console.error(err);
+        alert("⚠️ Gagal menyimpan! Ukuran foto terlalu besar. Coba gunakan foto dengan ukuran file yang lebih kecil.");
+      }
+    }
+
+    document.getElementById("saveLocalBtn").onclick = saveChangesAndAlert;
 
     document.getElementById("exportGithubBtn").onclick = () => {
       syncFormFieldsToData();
