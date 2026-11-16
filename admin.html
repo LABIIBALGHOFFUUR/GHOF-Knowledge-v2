@@ -333,27 +333,37 @@
     let data = getSiteData();
 
     // Kompres gambar otomatis agar ukuran file tetap ringan untuk localStorage & GitHub
-    function compressImageFile(file, maxWidth = 700, quality = 0.78) {
+    function compressImageFile(file, maxWidth = 800, quality = 0.8) {
       return new Promise((resolve) => {
         if (!file) return resolve("");
         const reader = new FileReader();
         reader.onload = (e) => {
           const img = new Image();
           img.onload = () => {
-            const canvas = document.createElement("canvas");
-            let w = img.width, h = img.height;
-            if (w > maxWidth) {
-              h = Math.round((h * maxWidth) / w);
-              w = maxWidth;
+            try {
+              const canvas = document.createElement("canvas");
+              let w = img.width, h = img.height;
+              if (w > maxWidth) {
+                h = Math.round((h * maxWidth) / w);
+                w = maxWidth;
+              }
+              canvas.width = w;
+              canvas.height = h;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, w, h);
+              resolve(canvas.toDataURL("image/jpeg", quality));
+            } catch (err) {
+              console.warn("Canvas compression failed, fallback to raw base64", err);
+              resolve(e.target.result);
             }
-            canvas.width = w;
-            canvas.height = h;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, w, h);
-            resolve(canvas.toDataURL("image/jpeg", quality));
+          };
+          img.onerror = () => {
+            // Jika gambar gagal dimuat canvas, langsung kembalikan base64 mentah
+            resolve(e.target.result);
           };
           img.src = e.target.result;
         };
+        reader.onerror = () => resolve("");
         reader.readAsDataURL(file);
       });
     }
