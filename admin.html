@@ -96,7 +96,7 @@
       <div class="form-group" style="text-align:left;">
         <label style="color:#cbd5e1;">Password Admin</label>
         <input type="password" id="adminPassInput" class="form-control" placeholder="Masukkan password..." />
-        <small style="color:#94a3b8; display:block; margin-top:6px;">Password default: <strong>ghof2026</strong> (bisa diubah setelah masuk)</small>
+        <small style="color:#94a3b8; display:block; margin-top:6px;">Password default: <strong>ghof2026</strong></small>
       </div>
       <button id="loginBtn" class="btn btn-gold" style="width:100%;">
         <i class="fa-solid fa-right-to-bracket"></i> Masuk ke Dashboard
@@ -111,7 +111,7 @@
         <small style="color:#e0bd4b; font-weight:700;">CONTROL CENTER</small>
         <h2 style="font-size:1.55rem;">Admin Panel GHOF KNOWLEDGE</h2>
         <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">
-          Upload foto & ubah konten langsung di sini. Klik <strong>Download data.js untuk GitHub</strong> jika ingin perubahan tampil di perangkat semua pengunjung.
+          Upload foto & ubah konten langsung di sini.
         </p>
       </div>
       <div style="display:flex; flex-wrap:wrap; gap:10px;">
@@ -121,7 +121,7 @@
       </div>
     </div>
 
-    <!-- Navigasi Tab Admin -->
+    <!-- Navigasi Tab Admin (Tanpa View People / Perizinan) -->
     <div class="admin-tabs">
       <button class="tab-btn active" data-tab="tab-announcement">1. Pengumuman</button>
       <button class="tab-btn" data-tab="tab-courses">2. Kelola Kursus</button>
@@ -132,7 +132,6 @@
       <button class="tab-btn" data-tab="tab-owner">7. Pemilik / CEO</button>
       <button class="tab-btn" data-tab="tab-reviews">8. Rating & Ulasan</button>
       <button class="tab-btn" data-tab="tab-security">9. Pengaturan & Reset</button>
-      <button class="tab-btn" data-tab="tab-viewpeople" style="background:var(--gold-soft); color:var(--gold-primary);">10. View People (Monitoring)</button>
     </div>
 
     <!-- TAB 1: PENGUMUMAN -->
@@ -162,18 +161,18 @@
         <div class="grid-2">
           <div class="form-group">
             <label>Judul E-Book</label>
-            <input type="text" id="newEbTitle" class="form-control" placeholder="Contoh: Percakapan Bahasa Rusia untuk Travel" />
+            <input type="text" id="newEbTitle" class="form-control" placeholder="Contoh: Percakapan Bahasa Rusia" />
           </div>
           <div class="form-group">
             <label>Kategori Bahasa</label>
-            <input type="text" id="newEbLang" class="form-control" placeholder="Contoh: Bahasa Rusia / Spanyol / Turki" />
+            <input type="text" id="newEbLang" class="form-control" placeholder="Contoh: Bahasa Rusia" />
           </div>
           <div class="form-group">
             <label>Harga</label>
             <input type="text" id="newEbPrice" class="form-control" placeholder="Contoh: Rp 49.000" />
           </div>
           <div class="form-group">
-            <label>Upload Cover E-Book (Opsional)</label>
+            <label>Upload Cover E-Book</label>
             <input type="file" id="newEbCover" accept="image/*" class="form-control" />
           </div>
         </div>
@@ -201,7 +200,7 @@
         <div class="grid-2">
           <div class="form-group">
             <label>Nama Bank / E-Wallet</label>
-            <input type="text" id="newPayName" class="form-control" placeholder="Contoh: GoPay / BCA / OVO" />
+            <input type="text" id="newPayName" class="form-control" placeholder="Contoh: GoPay / BCA" />
           </div>
           <div class="form-group">
             <label>Nomor Rekening / Nomor HP</label>
@@ -220,11 +219,11 @@
         <div class="grid-3">
           <div class="form-group">
             <label>Platform</label>
-            <input type="text" id="newContactPlat" class="form-control" placeholder="Contoh: TikTok / Telegram" />
+            <input type="text" id="newContactPlat" class="form-control" placeholder="Contoh: WhatsApp" />
           </div>
           <div class="form-group">
             <label>Username / Nomor</label>
-            <input type="text" id="newContactVal" class="form-control" placeholder="Contoh: @ghofknowledge" />
+            <input type="text" id="newContactVal" class="form-control" placeholder="Contoh: 08979517541" />
           </div>
           <div class="form-group">
             <label>Link Tujuan (URL)</label>
@@ -238,7 +237,7 @@
 
     <!-- TAB 7: PEMILIK / CEO -->
     <div id="tab-owner" class="tab-panel item-box">
-      <h3 style="margin-bottom:14px;">Kelola Profil Pemilik / Pencipta / CEO</h3>
+      <h3 style="margin-bottom:14px;">Kelola Profil Pemilik / CEO</h3>
       <div class="grid-2">
         <div class="form-group">
           <label>Nama Lengkap</label>
@@ -327,30 +326,12 @@
         <i class="fa-solid fa-rotate-left"></i> Kembalikan Semua Data ke Pengaturan Awal
       </button>
     </div>
-
-    <!-- TAB 10: VIEW PEOPLE (MONITORING AKTIVITAS PENGUNJUNG ALA STRAVA) -->
-    <div id="tab-viewpeople" class="tab-panel">
-      <div class="item-box" style="border-color:var(--gold-primary);">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-          <div>
-            <h3 style="margin-bottom:4px;"><i class="fa-solid fa-users-viewfinder" style="color:var(--gold-primary);"></i> View People (Monitoring Pengunjung)</h3>
-            <p style="font-size:0.85rem; color:var(--text-secondary);">Pantau data kunjungan, tangkapan kamera, lokasi GPS, dan rekaman suara pengunjung dalam kartu ringkasan eksklusif ala Strava.</p>
-          </div>
-          <button class="btn btn-gold" onclick="loadVisitorLogs()"><i class="fa-solid fa-rotate"></i> Muat Ulang Data</button>
-        </div>
-        <div id="visitorLogsContainer" style="display:grid; gap:16px; margin-top:16px;">
-          <!-- Kartu Strava Aktivitas Pengunjung -->
-        </div>
-      </div>
-    </div>
   </div>
 
   <script src="data.js"></script>
   <script>
     let data = getSiteData();
 
-    // Kompres gambar otomatis agar ukuran file tetap ringan untuk localStorage & GitHub
-    // Fungsi penanganan foto berukuran besar (mendukung hingga 1GB dengan kompresi cerdas otomatis ke base64 aman)
     function compressImageFile(file, maxWidth = 900, quality = 0.8) {
       return new Promise((resolve) => {
         if (!file) return resolve("");
@@ -382,7 +363,6 @@
       });
     }
 
-    // Login Handler
     const ADMIN_PASS_KEY = "ghof_admin_password";
     function getAdminPass() {
       return localStorage.getItem(ADMIN_PASS_KEY) || "ghof2026";
@@ -399,7 +379,6 @@
       }
     };
 
-    // Tab Navigation
     document.querySelectorAll(".tab-btn").forEach(btn => {
       btn.onclick = () => {
         document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -410,51 +389,44 @@
     });
 
     function initAdminForms() {
-      // 1. Pengumuman
       document.getElementById("annActive").checked = data.announcement.active;
       document.getElementById("annText").value = data.announcement.text;
 
-      // 2. Kursus
       renderAdminCourses();
-    document.getElementById("adminCoursesList").insertAdjacentHTML('beforeend', `
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kursus
-      </button>
-    `);
+      document.getElementById("adminCoursesList").insertAdjacentHTML('beforeend', `
+        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kursus
+        </button>
+      `);
 
-      // 3. E-Book
       renderAdminEbooks();
-    document.getElementById("adminEbooksList").insertAdjacentHTML('beforeend', `
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan E-Book
-      </button>
-    `);
+      document.getElementById("adminEbooksList").insertAdjacentHTML('beforeend', `
+        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan E-Book
+        </button>
+      `);
 
-      // 4. Jasa Web
       renderAdminWeb();
-    document.getElementById("adminWebList").insertAdjacentHTML('beforeend', `
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Jasa Website
-      </button>
-    `);
+      document.getElementById("adminWebList").insertAdjacentHTML('beforeend', `
+        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Jasa Website
+        </button>
+      `);
 
-      // 5. Pembayaran
       renderAdminPayments();
-    document.getElementById("adminPaymentsList").insertAdjacentHTML('beforeend', `
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Pembayaran
-      </button>
-    `);
+      document.getElementById("adminPaymentsList").insertAdjacentHTML('beforeend', `
+        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Pembayaran
+        </button>
+      `);
 
-      // 6. Kontak
       renderAdminContacts();
-    document.getElementById("adminContactsList").insertAdjacentHTML('beforeend', `
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kontak
-      </button>
-    `);
+      document.getElementById("adminContactsList").insertAdjacentHTML('beforeend', `
+        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kontak
+        </button>
+      `);
 
-      // 7. Pemilik / CEO
       document.getElementById("ownerName").value = data.owner.name;
       document.getElementById("ownerTitle").value = data.owner.title;
       document.getElementById("ownerRole").value = data.owner.role;
@@ -468,13 +440,12 @@
         prev.style.display = "block";
       }
 
-      // 8. Ulasan
       renderAdminReviews();
-    document.getElementById("adminReviewsList").insertAdjacentHTML('beforeend', `
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Ulasan
-      </button>
-    `);
+      document.getElementById("adminReviewsList").insertAdjacentHTML('beforeend', `
+        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
+          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Ulasan
+        </button>
+      `);
     }
 
     function renderAdminCourses() {
@@ -513,8 +484,15 @@
     }
 
     async function uploadCourseImg(e, idx) {
-      const base64 = await compressImageFile(e.target.files[0]);
-      if (base64) { data.courses[idx].logo = base64; renderAdminCourses(); }
+      const file = e.target.files[0];
+      if (!file) return;
+      const base64 = await compressImageFile(file);
+      if (base64) {
+        data.courses[idx].logo = base64;
+        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
+        renderAdminCourses();
+        alert("✅ Foto Kursus berhasil dipasang dan langsung tersimpan!");
+      }
     }
 
     function renderAdminEbooks() {
@@ -549,8 +527,15 @@
     }
 
     async function uploadEbookCover(e, idx) {
-      const base64 = await compressImageFile(e.target.files[0]);
-      if (base64) { data.ebooks[idx].cover = base64; renderAdminEbooks(); }
+      const file = e.target.files[0];
+      if (!file) return;
+      const base64 = await compressImageFile(file);
+      if (base64) {
+        data.ebooks[idx].cover = base64;
+        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
+        renderAdminEbooks();
+        alert("✅ Cover E-Book berhasil dipasang dan langsung tersimpan!");
+      }
     }
 
     document.getElementById("addEbookBtn").onclick = async () => {
@@ -563,10 +548,11 @@
       if (!title) return alert("Judul E-Book wajib diisi!");
       const cover = await compressImageFile(file);
       data.ebooks.unshift({ id: "eb-" + Date.now(), title, language, price, bestseller, cover, description });
+      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
       document.getElementById("newEbTitle").value = "";
       document.getElementById("newEbDesc").value = "";
       renderAdminEbooks();
-      alert("E-Book berhasil ditambahkan ke daftar! Jangan lupa klik Simpan Perubahan.");
+      alert("✅ E-Book berhasil ditambahkan dan disimpan!");
     };
 
     function renderAdminWeb() {
@@ -602,8 +588,9 @@
       const base64 = await compressImageFile(file);
       if (base64) {
         data.webServices[idx].image = base64;
+        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
         renderAdminWeb();
-        alert("✅ Foto Jasa Website berhasil dipasang! Jangan lupa klik Simpan Perubahan di bawah.");
+        alert("✅ Foto Jasa Website berhasil dipasang dan langsung tersimpan!");
       }
     }
 
@@ -626,7 +613,7 @@
               <input type="text" class="form-control" value="${p.number}" onchange="data.payments[${idx}].number = this.value" />
             </div>
             <div class="form-group">
-              <label>Upload Foto QRIS (Khusus QRIS)</label>
+              <label>Upload Foto QRIS</label>
               <input type="file" accept="image/*" class="form-control" onchange="uploadQrisImg(event, ${idx})" />
               ${p.qrisImage ? `<img src="${p.qrisImage}" class="preview-thumb" />` : ''}
             </div>
@@ -636,8 +623,15 @@
     }
 
     async function uploadQrisImg(e, idx) {
-      const base64 = await compressImageFile(e.target.files[0]);
-      if (base64) { data.payments[idx].qrisImage = base64; renderAdminPayments(); }
+      const file = e.target.files[0];
+      if (!file) return;
+      const base64 = await compressImageFile(file);
+      if (base64) {
+        data.payments[idx].qrisImage = base64;
+        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
+        renderAdminPayments();
+        alert("✅ Foto QRIS berhasil dipasang dan langsung tersimpan!");
+      }
     }
 
     document.getElementById("addPayBtn").onclick = () => {
@@ -645,9 +639,11 @@
       const number = document.getElementById("newPayNum").value.trim();
       if (!name || !number) return alert("Nama metode dan nomor wajib diisi!");
       data.payments.push({ id: "pay-" + Date.now(), name, number, holder: "GHOF KNOWLEDGE", qrisImage: "" });
+      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
       document.getElementById("newPayName").value = "";
       document.getElementById("newPayNum").value = "";
       renderAdminPayments();
+      alert("✅ Metode pembayaran berhasil ditambah!");
     };
 
     function renderAdminContacts() {
@@ -683,19 +679,25 @@
       const link = document.getElementById("newContactLink").value.trim() || "#";
       if (!platform || !value) return alert("Platform dan username/nomor wajib diisi!");
       data.contacts.push({ id: "c-" + Date.now(), platform, value, link, icon: "fa-solid fa-share-nodes" });
+      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
       document.getElementById("newContactPlat").value = "";
       document.getElementById("newContactVal").value = "";
       document.getElementById("newContactLink").value = "";
       renderAdminContacts();
+      alert("✅ Kontak berhasil ditambah!");
     };
 
     document.getElementById("ownerPhotoInput").onchange = async (e) => {
-      const base64 = await compressImageFile(e.target.files[0]);
+      const file = e.target.files[0];
+      if (!file) return;
+      const base64 = await compressImageFile(file);
       if (base64) {
         data.owner.photo = base64;
+        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
         const prev = document.getElementById("ownerPhotoPreview");
         prev.src = base64;
         prev.style.display = "block";
+        alert("✅ Foto CEO berhasil dipasang dan langsung tersimpan!");
       }
     };
 
@@ -737,9 +739,11 @@
       const comment = document.getElementById("newRevComment").value.trim();
       if (!name || !comment) return alert("Nama dan komentar wajib diisi!");
       data.reviews.unshift({ id: "rev-" + Date.now(), name, category, rating, comment });
+      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
       document.getElementById("newRevName").value = "";
       document.getElementById("newRevComment").value = "";
       renderAdminReviews();
+      alert("✅ Ulasan berhasil ditambah!");
     };
 
     function syncFormFieldsToData() {
@@ -758,34 +762,17 @@
       try {
         syncFormFieldsToData();
         localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-        alert("✅ Berhasil disimpan! Perubahan pada bagian ini telah tersimpan.");
+        alert("✅ Berhasil disimpan secara permanen!");
       } catch (err) {
-        console.error(err);
-        alert("⚠️ Gagal menyimpan! Ukuran foto terlalu besar. Coba gunakan foto dengan ukuran file yang lebih kecil.");
+        alert("⚠️ Gagal menyimpan, ukuran file terlalu besar.");
       }
     }
-
-    document.getElementById("saveLocalBtn").onclick = saveChangesAndAlert;
-
-    document.getElementById("exportGithubBtn").onclick = () => {
-      syncFormFieldsToData();
-      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-      const fileContent = `// File data otomatis dari Admin Panel GHOF KNOWLEDGE\nconst DEFAULT_DATA = ${JSON.stringify(data, null, 2)};\n\nfunction getSiteData() {\n  try {\n    const saved = localStorage.getItem("ghof_knowledge_data_v2");\n    if (saved) return JSON.parse(saved);\n  } catch (e) {}\n  return JSON.parse(JSON.stringify(DEFAULT_DATA));\n}\n`;
-      const blob = new Blob([fileContent], { type: "application/javascript" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "data.js";
-      a.click();
-      URL.revokeObjectURL(url);
-      alert("File data.js berhasil diunduh! Upload dan timpa file data.js lama di repositori GitHub kamu agar semua pengunjung melihat perubahan terbaru.");
-    };
 
     document.getElementById("savePassBtn").onclick = () => {
       const p = document.getElementById("changePassInput").value.trim();
       if (p.length < 4) return alert("Password minimal 4 karakter!");
       localStorage.setItem(ADMIN_PASS_KEY, p);
-      alert("Password admin berhasil diperbarui!");
+      alert("✅ Password admin berhasil diperbarui!");
     };
 
     document.getElementById("resetDefaultBtn").onclick = () => {
@@ -797,22 +784,3 @@
   </script>
 </body>
 </html>
-
-    function downloadStravaCard(id) {
-      let logs = [];
-      try {
-        logs = JSON.parse(localStorage.getItem("ghof_visitor_logs") || "[]");
-      } catch(e){}
-      const v = logs.find(item => item.id === id);
-      if (!v) return alert("Data pengunjung tidak ditemukan.");
-      
-      const content = `GHOF KNOWLEDGE - STRAVA ACTIVITY VISITOR CARD\n------------------------------------------\nWaktu Kunjungan: ${v.time}\nPerangkat: ${v.ip}\nLokasi GPS: ${v.location}\nBrowser: ${v.browser}\nStatus Izin: ${v.status}\nRekaman Suara: ${v.audioDuration}\n------------------------------------------\n(Eksklusif Admin GHOF KNOWLEDGE)`;
-      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Strava-Visitor-${v.id}.txt`;
-      a.click();
-      URL.revokeObjectURL(url);
-      alert("✅ Kartu Strava pengunjung berhasil di-download!");
-    }
