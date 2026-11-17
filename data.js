@@ -7,7 +7,7 @@ const DEFAULT_DATA = {
   owner: {
     name: "LABIIB AL GHOFFUUR",
     title: "Mntr.Br, Bs, Bt",
-    role: "Founder & CEO GHOF KNOWLEDGE • Mentor Bahasa Rusia, Spanyol & Turki",
+    role: "CEO GHOF KNOWLEDGE • Mentor Bahasa Rusia, Spanyol & Turki",
     photo: "ceo-profile.png",
     description: "Labiib Al Ghoffuur adalah pendiri GHOF KNOWLEDGE sekaligus mentor multibahasa yang berdedikasi membantu pelajar Indonesia menguasai bahasa asing secara terstruktur, praktis, dan menyenangkan. Dengan pendekatan belajar dari nol hingga percakapan aktif, GHOF KNOWLEDGE hadir sebagai jembatan menuju peluang pendidikan dan karier global.",
     goal: "Menciptakan ekosistem pembelajaran bahasa asing dan solusi digital yang mudah diakses, terjangkau, dan berdampak nyata bagi generasi muda Indonesia untuk bersaing di kancah internasional.",
@@ -62,23 +62,23 @@ const DEFAULT_DATA = {
   ebooks: [
     {
       id: "eb-rusia",
-      title: "Panduan Lengkap Alfabet Sirilik & Percakapan Dasar Rusia",
+      title: "E-book Belajar Bahasa Rusia",
       language: "Bahasa Rusia",
-      price: "Rp 45.000",
-      bestseller: true,
+      price: "Rp 49.500",
+      bestseller: false,
       active: true,
       cover: "ebook-rusia.png",
-      description: "E-book praktis berisi cara baca huruf Sirilik, aturan pelafalan vokal-konsonan, 500+ kosakata harian, dan dialog praktis untuk pemula."
+      description: "hubungi admin untuk konfirmasi E-book yang di pilih sama anda dan anda bisa request materi."
     },
     {
       id: "eb-jepang",
-      title: "Panduan Ringkas Bahasa Jepang dari Nol (JLPT N5)",
+      title: "E-book Belajar Bahasa Jepang",
       language: "Bahasa Jepang",
-      price: "Rp 39.000",
+      price: "Harga mulai dari Rp 59.000",
       bestseller: true,
       active: true,
       cover: "ebook-jepang.png",
-      description: "Belajar Hiragana, Katakana, kosakata dasar, dan pola kalimat sehari-hari bahasa Jepang dengan penjelasan mudah dipahami."
+      description: "hubungi admin untuk konfirmasi E-book yang di pilih sama anda dan anda bisa request materi."
     },
     {
       id: "eb-korea",
