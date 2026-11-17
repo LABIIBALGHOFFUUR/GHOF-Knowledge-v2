@@ -64,7 +64,7 @@ const DEFAULT_DATA = {
       id: "eb-rusia",
       title: "E-book Belajar Bahasa Rusia",
       language: "Bahasa Rusia",
-      price: "Rp 49.500",
+      price: "Rp 39.500 - Rp 67.999",
       bestseller: false,
       active: true,
       cover: "ebook-rusia.png",
@@ -74,7 +74,7 @@ const DEFAULT_DATA = {
       id: "eb-jepang",
       title: "E-book Belajar Bahasa Jepang",
       language: "Bahasa Jepang",
-      price: "Harga mulai dari Rp 59.000",
+      price: "Rp 59.999 - Rp 115.000",
       bestseller: true,
       active: true,
       cover: "ebook-jepang.png",
@@ -82,40 +82,40 @@ const DEFAULT_DATA = {
     },
     {
       id: "eb-korea",
-      title: "Kuasai Hangeul & Percakapan Sehari-hari Bahasa Korea",
+      title: "E-book Belajar Bahasa Korea",
       language: "Bahasa Korea",
-      price: "Rp 39.000",
-      bestseller: false,
+      price: "Rp 49.000 - Rp 79.999",
+      bestseller: true,
       active: true,
       cover: "ebook-korea.png",
       description: "Panduan cepat membaca aksara Hangeul, tata bahasa dasar, serta frasa percakapan praktis untuk pemula."
     },
     {
       id: "eb-inggris",
-      title: "Practical English Grammar & Daily Conversation",
+      title: "E-book Belajar Bahasa Inggris",
       language: "Bahasa Inggris",
-      price: "Rp 35.000",
+      price: "Rp 25.000 - Rp 59.999",
       bestseller: false,
       active: true,
       cover: "ebook-inggris.png",
-      description: "Kumpulan tenses inti, kosakata penting, dan contoh percakapan bahasa Inggris aktif untuk akademik maupun kerja."
+      description: "hubungi admin untuk konfirmasi E-book yang di pilih sama anda dan anda bisa request materi."
     },
     {
       id: "eb-turki",
-      title: "Langkah Cepat Menguasai Bahasa Turki Dasar (Level A1)",
+      title: "E-book Belajar Bahasa Turki",
       language: "Bahasa Turki",
-      price: "Rp 42.000",
+      price: "Rp 29.999 - Rp 42.000",
       bestseller: false,
       active: false,
       cover: "ebook-turki.png",
-      description: "Materi komprehensif pengenalan bahasa Turki mulai dari harmoni vokal, imbuhan dasar, hingga percakapan perkenalan dan perjalanan."
+      description: "hubungi admin untuk konfirmasi E-book yang di pilih sama anda dan anda bisa request materi."
     }
   ],
   webServices: [
     {
       id: "web-1",
       category: "Website Sekolah & Lembaga Pendidikan",
-      price: "Mulai Rp 750.000",
+      price: "Mulai Rp 350.000",
       image: "web-sekolah.png",
       active: true,
       description: "Website profil sekolah, pesantren, atau lembaga kursus lengkap dengan informasi PPDB, galeri kegiatan, profil pengajar, dan pengumuman akademik."
@@ -123,7 +123,7 @@ const DEFAULT_DATA = {
     {
       id: "web-2",
       category: "Website Toko Online / Jualan & Katalog",
-      price: "Mulai Rp 650.000",
+      price: "Mulai Rp 550.000",
       image: "web-toko.png",
       active: true,
       description: "Katalog produk modern untuk UMKM dan bisnis online dengan fitur keranjang/pemesanan langsung ke WhatsApp, label promo, dan tampilan mobile-friendly."
@@ -131,7 +131,7 @@ const DEFAULT_DATA = {
     {
       id: "web-3",
       category: "Website Portofolio & Personal Branding",
-      price: "Mulai Rp 450.000",
+      price: "Mulai Rp 50.000",
       image: "web-portofolio.png",
       active: true,
       description: "Tampilkan CV, karya, sertifikat, dan layanan profesional kamu dalam satu halaman elegan yang siap memukau klien maupun rekruter."
@@ -139,7 +139,7 @@ const DEFAULT_DATA = {
     {
       id: "web-4",
       category: "Website Company Profile & Organisasi",
-      price: "Mulai Rp 850.000",
+      price: "Mulai Rp 600.000",
       image: "web-company.png",
       active: true,
       description: "Bangun kredibilitas perusahaan, komunitas, atau startup dengan halaman profil resmi, layanan unggulan, testimoni klien, dan integrasi kontak."
