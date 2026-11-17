@@ -77,7 +77,7 @@ const DEFAULT_DATA = {
       price: "Rp 59.999 - Rp 115.000",
       bestseller: true,
       active: true,
-      cover: "ebook-jepang.jpg",
+      cover: "ebook-jepang.png",
       description: "hubungi admin untuk konfirmasi E-book yang di pilih sama anda dan anda bisa request materi."
     },
     {
