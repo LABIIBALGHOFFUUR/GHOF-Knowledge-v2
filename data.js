@@ -1,7 +1,7 @@
 // Pusat Data GHOF KNOWLEDGE (Sistem File Statis Permanen)
 const DEFAULT_DATA = {
   announcement: {
-    active: true,
+    active: false,
     text: "🔥 PROMO PEMBUKAAN GHOF RUSSIAN CLASS! Kelas Berbayar hanya Rp39.000/bulan (minimal 3 bulan = Rp117.000) dari harga normal Rp59.000/bulan! Periode: 15 Nov 2026 – 28 Nov 2027. Daftar sekarang!"
   },
   owner: {
@@ -77,7 +77,7 @@ const DEFAULT_DATA = {
       price: "Rp 59.999 - Rp 115.000",
       bestseller: true,
       active: true,
-      cover: "ebook-jepang.png",
+      cover: "ebook-jepang.jpg",
       description: "hubungi admin untuk konfirmasi E-book yang di pilih sama anda dan anda bisa request materi."
     },
     {
@@ -106,7 +106,7 @@ const DEFAULT_DATA = {
       language: "Bahasa Turki",
       price: "Rp 29.999 - Rp 42.000",
       bestseller: false,
-      active: false,
+      active: true,
       cover: "ebook-turki.png",
       description: "hubungi admin untuk konfirmasi E-book yang di pilih sama anda dan anda bisa request materi."
     }
@@ -154,6 +154,7 @@ const DEFAULT_DATA = {
   contacts: [
     { id: "c-1", platform: "WhatsApp", value: "08979517541", link: "https://wa.me/628979517541", icon: "fa-brands fa-whatsapp" },
     { id: "c-2", platform: "Instagram", value: "@xiaobi_03", link: "https://instagram.com/xiaobi_03", icon: "fa-brands fa-instagram" },
+    { id: "c-X", platform: "AIverse.indonesia", value: "AI education", link: "https://labiibalghoffuur.github.io/AIverse.indonesia/#beranda", icon: "icon-font-awesome" },
     { id: "c-3", platform: "Gmail", value: "anakbahasainternational@gmail.com", link: "mailto:anakbahasainternational@gmail.com", icon: "fa-solid fa-envelope" }
   ],
   reviews: [
