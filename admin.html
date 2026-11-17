@@ -4,783 +4,348 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel — GHOF KNOWLEDGE</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
   <style>
-    .admin-wrap { max-width: 1120px; margin: 32px auto; padding: 0 20px 80px; }
-    .admin-topbar {
-      background: linear-gradient(135deg, #0b192c, #162b4d);
-      color: #fff;
-      padding: 22px 28px;
-      border-radius: 18px;
-      border: 1px solid rgba(212,175,55,0.4);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
+    :root {
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --gold: #b8860b;
+      --border: #e2e8f0;
+      --danger: #dc2626;
+      --success: #16a34a;
     }
-    .admin-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
-    .tab-btn {
-      padding: 10px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-card);
-      color: var(--text-primary);
-      font-weight: 700;
-      font-size: 0.86rem;
-      cursor: pointer;
-    }
-    .tab-btn.active {
-      background: var(--gold-primary);
-      color: #0b192c;
-      border-color: var(--gold-primary);
-    }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-    .item-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 18px;
-    }
-    .preview-thumb {
-      width: 96px;
-      height: 96px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 1px solid var(--gold-primary);
-      margin-top: 8px;
-      display: block;
-    }
-    .login-screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: radial-gradient(circle at center, #162b4d, #070e1a);
-    }
-    .login-card {
-      background: #0d182b;
-      color: #f8fafc;
-      border: 1px solid rgba(212,175,55,0.45);
-      border-radius: 20px;
-      padding: 36px;
-      max-width: 410px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header { background: var(--card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+    .header h1 { font-size: 1.35rem; color: var(--gold); }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .tab-btn { padding: 10px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.88rem; }
+    .tab-btn.active { background: var(--gold); color: #fff; border-color: var(--gold); }
+    .section-card { background: var(--card); padding: 24px; border-radius: 16px; border: 1px solid var(--border); display: none; }
+    .section-card.active { display: block; }
+    .item-box { background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 5px; }
+    .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.92rem; }
+    .btn { padding: 10px 18px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px; }
+    .btn-gold { background: var(--gold); color: #fff; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-outline { background: #fff; border: 1px solid var(--border); color: var(--text); }
+    .switch-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-weight: 600; font-size: 0.88rem; }
+    .export-box { background: #0f172a; color: #f8fafc; padding: 16px; border-radius: 12px; margin-top: 20px; }
   </style>
 </head>
 <body>
 
-  <!-- LAYAR LOGIN ADMIN -->
-  <div id="loginScreen" class="login-screen">
-    <div class="login-card">
-      <div class="brand-emblem" style="margin:0 auto 14px; width:54px; height:54px; font-size:1.5rem;">
-        <i class="fa-solid fa-shield-halved"></i>
-      </div>
-      <h2 style="margin-bottom:6px;">Admin Panel</h2>
-      <p style="color:#94a3b8; font-size:0.88rem; margin-bottom:22px;">Khusus Pengelola GHOF KNOWLEDGE</p>
-      <div class="form-group" style="text-align:left;">
-        <label style="color:#cbd5e1;">Password Admin</label>
-        <input type="password" id="adminPassInput" class="form-control" placeholder="Masukkan password..." />
-        <small style="color:#94a3b8; display:block; margin-top:6px;">Password default: <strong>ghof2026</strong></small>
-      </div>
-      <button id="loginBtn" class="btn btn-gold" style="width:100%;">
-        <i class="fa-solid fa-right-to-bracket"></i> Masuk ke Dashboard
-      </button>
+<div class="container">
+  <div class="header">
+    <div>
+      <h1><i class="fa-solid fa-sliders"></i> Admin Panel GHOF KNOWLEDGE</h1>
+      <small style="color:var(--muted);">Kelola E-Book, Kursus, Jasa Web, dan Pembayaran (Tanpa Upload Foto)</small>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="index.html" target="_blank" class="btn btn-outline"><i class="fa-solid fa-eye"></i> Lihat Web</a>
+      <button onclick="downloadUpdatedDataJs()" class="btn btn-success"><i class="fa-solid fa-download"></i> Download data.js Terbaru</button>
     </div>
   </div>
 
-  <!-- DASHBOARD ADMIN -->
-  <div id="adminDashboard" class="admin-wrap" style="display:none;">
-    <div class="admin-topbar">
-      <div>
-        <small style="color:#e0bd4b; font-weight:700;">CONTROL CENTER</small>
-        <h2 style="font-size:1.55rem;">Admin Panel GHOF KNOWLEDGE</h2>
-        <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">
-          Upload foto & ubah konten langsung di sini.
-        </p>
-      </div>
-      <div style="display:flex; flex-wrap:wrap; gap:10px;">
-        <a href="index.html" target="_blank" class="btn btn-outline" style="background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.2);">
-          <i class="fa-solid fa-eye"></i> Lihat Web Pengunjung
-        </a>
-      </div>
-    </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-ebook', this)">📚 Kelola E-Book</button>
+    <button class="tab-btn" onclick="switchTab('tab-kursus', this)">🎓 Kelola Kursus</button>
+    <button class="tab-btn" onclick="switchTab('tab-web', this)">💻 Jasa Website</button>
+    <button class="tab-btn" onclick="switchTab('tab-pay', this)">💳 Pembayaran & Pengumuman</button>
+  </div>
 
-    <!-- Navigasi Tab Admin (Tanpa View People / Perizinan) -->
-    <div class="admin-tabs">
-      <button class="tab-btn active" data-tab="tab-announcement">1. Pengumuman</button>
-      <button class="tab-btn" data-tab="tab-courses">2. Kelola Kursus</button>
-      <button class="tab-btn" data-tab="tab-ebooks">3. Kelola E-Book</button>
-      <button class="tab-btn" data-tab="tab-web">4. Jasa Website</button>
-      <button class="tab-btn" data-tab="tab-payments">5. Metode Pembayaran & QRIS</button>
-      <button class="tab-btn" data-tab="tab-contacts">6. Kontak & Sosmed</button>
-      <button class="tab-btn" data-tab="tab-owner">7. Pemilik / CEO</button>
-      <button class="tab-btn" data-tab="tab-reviews">8. Rating & Ulasan</button>
-      <button class="tab-btn" data-tab="tab-security">9. Pengaturan & Reset</button>
+  <!-- TAB E-BOOK -->
+  <div id="tab-ebook" class="section-card active">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h3>Daftar E-Book Bahasa</h3>
+      <button class="btn btn-gold" onclick="addNewEbook()"><i class="fa-solid fa-plus"></i> Tambah E-Book Baru</button>
     </div>
+    <div id="ebookListAdmin"></div>
+    <button class="btn btn-gold" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan E-Book</button>
+  </div>
 
-    <!-- TAB 1: PENGUMUMAN -->
-    <div id="tab-announcement" class="tab-panel active item-box">
-      <h3 style="margin-bottom:14px;">Kelola Banner Pengumuman</h3>
+  <!-- TAB KURSUS -->
+  <div id="tab-kursus" class="section-card">
+    <h3 style="margin-bottom:16px;">Paket Kursus Bahasa Rusia</h3>
+    <div id="courseListAdmin"></div>
+    <button class="btn btn-gold" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kursus</button>
+  </div>
+
+  <!-- TAB JASA WEB -->
+  <div id="tab-web" class="section-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h3>Daftar Layanan Jasa Website</h3>
+      <button class="btn btn-gold" onclick="addNewWebService()"><i class="fa-solid fa-plus"></i> Tambah Layanan Web</button>
+    </div>
+    <div id="webListAdmin"></div>
+    <button class="btn btn-gold" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Jasa Web</button>
+  </div>
+
+  <!-- TAB PEMBAYARAN & PENGUMUMAN -->
+  <div id="tab-pay" class="section-card">
+    <h3 style="margin-bottom:12px;">Teks Pengumuman Berjalan</h3>
+    <div class="item-box">
       <div class="form-group">
-        <label><input type="checkbox" id="annActive" /> Tampilkan Banner Pengumuman di Atas Website</label>
+        <label>Teks Pengumuman</label>
+        <input type="text" id="annText" class="form-control" />
       </div>
-      <div class="form-group">
-        <label>Teks Pengumuman Berjalan</label>
-        <textarea id="annText" rows="3" class="form-control"></textarea>
-      </div>
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:12px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Pengumuman
-      </button>
+      <label class="switch-row">
+        <input type="checkbox" id="annActive" /> Tampilkan Pengumuman di Web
+      </label>
     </div>
 
-    <!-- TAB 2: KURSUS -->
-    <div id="tab-courses" class="tab-panel">
-      <div id="adminCoursesList"></div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin:20px 0 12px;">
+      <h3>Metode Pembayaran</h3>
+      <button class="btn btn-gold" onclick="addNewPayment()"><i class="fa-solid fa-plus"></i> Tambah Pembayaran</button>
     </div>
+    <div id="paymentListAdmin"></div>
+    <button class="btn btn-gold" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan</button>
+  </div>
 
-    <!-- TAB 3: E-BOOK -->
-    <div id="tab-ebooks" class="tab-panel">
-      <div class="item-box" style="border-color:var(--gold-primary);">
-        <h3 style="margin-bottom:12px;"><i class="fa-solid fa-plus-circle" style="color:var(--gold-primary);"></i> Tambah E-Book Baru</h3>
-        <div class="grid-2">
+  <div class="export-box">
+    <h4 style="color:#e0bd4b; margin-bottom:6px;"><i class="fa-solid fa-circle-info"></i> Cara Sinkronisasi ke Link Publik GitHub:</h4>
+    <p style="font-size:0.86rem; color:#cbd5e1; line-height:1.5;">
+      1. Edit data di atas (tambah/hapus e-book, ubah harga, tutup/buka katalog) lalu klik <b>Simpan</b>.<br>
+      2. Klik tombol hijau <b>Download data.js Terbaru</b> di kanan atas.<br>
+      3. Upload file <b>data.js</b> tersebut ke repositori GitHub kamu (timpa file data.js lama) agar semua pengunjung di link publik langsung melihat pembaruannya!
+    </p>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+  let data = getSiteData();
+
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function renderAdminAll() {
+    // E-books
+    document.getElementById('ebookListAdmin').innerHTML = (data.ebooks || []).map((eb, idx) => `
+      <div class="item-box">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <strong>#${idx + 1} — ${eb.title}</strong>
+          <button class="btn btn-danger" style="padding:4px 10px; font-size:0.78rem;" onclick="deleteEbook(${idx})"><i class="fa-solid fa-trash"></i> Hapus</button>
+        </div>
+        <div class="form-group">
+          <label>Judul E-Book</label>
+          <input type="text" class="form-control" value="${eb.title}" onchange="data.ebooks[${idx}].title = this.value" />
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
           <div class="form-group">
-            <label>Judul E-Book</label>
-            <input type="text" id="newEbTitle" class="form-control" placeholder="Contoh: Percakapan Bahasa Rusia" />
-          </div>
-          <div class="form-group">
-            <label>Kategori Bahasa</label>
-            <input type="text" id="newEbLang" class="form-control" placeholder="Contoh: Bahasa Rusia" />
+            <label>Bahasa</label>
+            <input type="text" class="form-control" value="${eb.language}" onchange="data.ebooks[${idx}].language = this.value" />
           </div>
           <div class="form-group">
             <label>Harga</label>
-            <input type="text" id="newEbPrice" class="form-control" placeholder="Contoh: Rp 49.000" />
+            <input type="text" class="form-control" value="${eb.price}" onchange="data.ebooks[${idx}].price = this.value" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Nama File Foto di GitHub (contoh: ebook-turki.png)</label>
+          <input type="text" class="form-control" value="${eb.cover || ''}" onchange="data.ebooks[${idx}].cover = this.value" />
+        </div>
+        <div class="form-group">
+          <label>Deskripsi</label>
+          <textarea class="form-control" rows="2" onchange="data.ebooks[${idx}].description = this.value">${eb.description}</textarea>
+        </div>
+        <div style="display:flex; gap:20px;">
+          <label class="switch-row">
+            <input type="checkbox" ${eb.active !== false ? 'checked' : ''} onchange="data.ebooks[${idx}].active = this.checked" /> Tampilkan (Buka E-Book)
+          </label>
+          <label class="switch-row">
+            <input type="checkbox" ${eb.bestseller ? 'checked' : ''} onchange="data.ebooks[${idx}].bestseller = this.checked" /> Label Terlaris
+          </label>
+        </div>
+      </div>
+    `).join('');
+
+    // Courses
+    document.getElementById('courseListAdmin').innerHTML = (data.courses || []).map((c, idx) => `
+      <div class="item-box">
+        <strong>${c.name}</strong>
+        <div class="form-group" style="margin-top:10px;">
+          <label>Nama Paket Kursus</label>
+          <input type="text" class="form-control" value="${c.name}" onchange="data.courses[${idx}].name = this.value" />
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div class="form-group">
+            <label>Harga</label>
+            <input type="text" class="form-control" value="${c.price}" onchange="data.courses[${idx}].price = this.value" />
           </div>
           <div class="form-group">
-            <label>Upload Cover E-Book</label>
-            <input type="file" id="newEbCover" accept="image/*" class="form-control" />
+            <label>Nama File Foto di GitHub</label>
+            <input type="text" class="form-control" value="${c.logo || ''}" onchange="data.courses[${idx}].logo = this.value" />
           </div>
         </div>
         <div class="form-group">
-          <label>Deskripsi Singkat</label>
-          <textarea id="newEbDesc" rows="2" class="form-control" placeholder="Ringkasan isi e-book..."></textarea>
+          <label>Deskripsi</label>
+          <textarea class="form-control" rows="2" onchange="data.courses[${idx}].description = this.value">${c.description}</textarea>
+        </div>
+        <label class="switch-row">
+          <input type="checkbox" ${c.active !== false ? 'checked' : ''} onchange="data.courses[${idx}].active = this.checked" /> Aktifkan Kelas Ini
+        </label>
+      </div>
+    `).join('');
+
+    // Web Services
+    document.getElementById('webListAdmin').innerHTML = (data.webServices || []).map((ws, idx) => `
+      <div class="item-box">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+          <strong>#${idx + 1} — ${ws.category}</strong>
+          <button class="btn btn-danger" style="padding:4px 10px; font-size:0.78rem;" onclick="deleteWeb(${idx})"><i class="fa-solid fa-trash"></i> Hapus</button>
         </div>
         <div class="form-group">
-          <label><input type="checkbox" id="newEbBest" /> Sematkan Tanda "TERLARIS"</label>
+          <label>Kategori Website</label>
+          <input type="text" class="form-control" value="${ws.category}" onchange="data.webServices[${idx}].category = this.value" />
         </div>
-        <button id="addEbookBtn" class="btn btn-gold"><i class="fa-solid fa-plus"></i> Tambahkan E-Book</button>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div class="form-group">
+            <label>Harga / Mulai Dari</label>
+            <input type="text" class="form-control" value="${ws.price}" onchange="data.webServices[${idx}].price = this.value" />
+          </div>
+          <div class="form-group">
+            <label>Nama File Foto di GitHub</label>
+            <input type="text" class="form-control" value="${ws.image || ''}" onchange="data.webServices[${idx}].image = this.value" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Deskripsi</label>
+          <textarea class="form-control" rows="2" onchange="data.webServices[${idx}].description = this.value">${ws.description}</textarea>
+        </div>
+        <label class="switch-row">
+          <input type="checkbox" ${ws.active !== false ? 'checked' : ''} onchange="data.webServices[${idx}].active = this.checked" /> Tampilkan Layanan Ini
+        </label>
       </div>
-      <div id="adminEbooksList"></div>
-    </div>
+    `).join('');
 
-    <!-- TAB 4: JASA WEBSITE -->
-    <div id="tab-web" class="tab-panel">
-      <div id="adminWebList"></div>
-    </div>
+    // Announcement & Payments
+    document.getElementById('annText').value = data.announcement ? data.announcement.text : '';
+    document.getElementById('annActive').checked = data.announcement ? data.announcement.active : true;
 
-    <!-- TAB 5: PEMBAYARAN -->
-    <div id="tab-payments" class="tab-panel">
-      <div class="item-box" style="border-color:var(--gold-primary);">
-        <h3 style="margin-bottom:12px;">Tambah Metode Pembayaran Baru</h3>
-        <div class="grid-2">
+    document.getElementById('paymentListAdmin').innerHTML = (data.payments || []).map((p, idx) => `
+      <div class="item-box">
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+          <strong>${p.name}</strong>
+          <button class="btn btn-danger" style="padding:4px 10px; font-size:0.78rem;" onclick="deletePay(${idx})"><i class="fa-solid fa-trash"></i> Hapus</button>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
           <div class="form-group">
             <label>Nama Bank / E-Wallet</label>
-            <input type="text" id="newPayName" class="form-control" placeholder="Contoh: GoPay / BCA" />
+            <input type="text" class="form-control" value="${p.name}" onchange="data.payments[${idx}].name = this.value" />
           </div>
           <div class="form-group">
-            <label>Nomor Rekening / Nomor HP</label>
-            <input type="text" id="newPayNum" class="form-control" placeholder="Contoh: 08979517541" />
-          </div>
-        </div>
-        <button id="addPayBtn" class="btn btn-gold"><i class="fa-solid fa-plus"></i> Tambah Metode Pembayaran</button>
-      </div>
-      <div id="adminPaymentsList"></div>
-    </div>
-
-    <!-- TAB 6: KONTAK & SOSMED -->
-    <div id="tab-contacts" class="tab-panel">
-      <div class="item-box" style="border-color:var(--gold-primary);">
-        <h3 style="margin-bottom:12px;">Tambah Kontak / Media Sosial</h3>
-        <div class="grid-3">
-          <div class="form-group">
-            <label>Platform</label>
-            <input type="text" id="newContactPlat" class="form-control" placeholder="Contoh: WhatsApp" />
-          </div>
-          <div class="form-group">
-            <label>Username / Nomor</label>
-            <input type="text" id="newContactVal" class="form-control" placeholder="Contoh: 08979517541" />
-          </div>
-          <div class="form-group">
-            <label>Link Tujuan (URL)</label>
-            <input type="text" id="newContactLink" class="form-control" placeholder="https://..." />
-          </div>
-        </div>
-        <button id="addContactBtn" class="btn btn-gold"><i class="fa-solid fa-plus"></i> Tambah Kontak</button>
-      </div>
-      <div id="adminContactsList"></div>
-    </div>
-
-    <!-- TAB 7: PEMILIK / CEO -->
-    <div id="tab-owner" class="tab-panel item-box">
-      <h3 style="margin-bottom:14px;">Kelola Profil Pemilik / CEO</h3>
-      <div class="grid-2">
-        <div class="form-group">
-          <label>Nama Lengkap</label>
-          <input type="text" id="ownerName" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label>Gelar</label>
-          <input type="text" id="ownerTitle" class="form-control" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Jabatan / Peran</label>
-        <input type="text" id="ownerRole" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label>Upload Foto Pemilik / CEO</label>
-        <input type="file" id="ownerPhotoInput" accept="image/*" class="form-control" />
-        <img id="ownerPhotoPreview" class="preview-thumb" style="display:none;" />
-      </div>
-      <div class="form-group">
-        <label>Deskripsi Profil</label>
-        <textarea id="ownerDesc" rows="3" class="form-control"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Tujuan</label>
-        <textarea id="ownerGoal" rows="2" class="form-control"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Visi</label>
-        <textarea id="ownerVision" rows="2" class="form-control"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Misi (Pisahkan tiap poin dengan baris baru)</label>
-        <textarea id="ownerMission" rows="4" class="form-control"></textarea>
-      </div>
-      <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:12px; width:100%;">
-        <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Profil CEO
-      </button>
-    </div>
-
-    <!-- TAB 8: RATING & ULASAN -->
-    <div id="tab-reviews" class="tab-panel">
-      <div class="item-box" style="border-color:var(--gold-primary);">
-        <h3 style="margin-bottom:12px;">Tambah Ulasan & Rating Bintang</h3>
-        <div class="grid-3">
-          <div class="form-group">
-            <label>Nama Pemberi Ulasan</label>
-            <input type="text" id="newRevName" class="form-control" placeholder="Nama lengkap..." />
-          </div>
-          <div class="form-group">
-            <label>Kategori Layanan</label>
-            <select id="newRevCat" class="form-control">
-              <option value="Kursus Bahasa Rusia">Kursus Bahasa Rusia</option>
-              <option value="E-Book Bahasa">E-Book Bahasa</option>
-              <option value="Jasa Pembuatan Web">Jasa Pembuatan Web</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Jumlah Bintang (1 - 5)</label>
-            <select id="newRevStars" class="form-control">
-              <option value="5">★★★★★ (5 Bintang)</option>
-              <option value="4">★★★★☆ (4 Bintang)</option>
-              <option value="3">★★★☆☆ (3 Bintang)</option>
-            </select>
+            <label>Nomor Rekening / HP</label>
+            <input type="text" class="form-control" value="${p.number}" onchange="data.payments[${idx}].number = this.value" />
           </div>
         </div>
         <div class="form-group">
-          <label>Isi Komentar</label>
-          <textarea id="newRevComment" rows="2" class="form-control" placeholder="Tulis ulasan positif..."></textarea>
+          <label>Nama File QRIS di GitHub (contoh: qris-labiib.png)</label>
+          <input type="text" class="form-control" value="${p.qrisImage || ''}" onchange="data.payments[${idx}].qrisImage = this.value" />
         </div>
-        <button id="addRevBtn" class="btn btn-gold"><i class="fa-solid fa-plus"></i> Tambah Ulasan</button>
       </div>
-      <div id="adminReviewsList"></div>
-    </div>
+    `).join('');
+  }
 
-    <!-- TAB 9: KEAMANAN & RESET -->
-    <div id="tab-security" class="tab-panel item-box">
-      <h3 style="margin-bottom:14px;">Keamanan Admin & Reset Data</h3>
-      <div class="form-group" style="max-width:400px;">
-        <label>Ubah Password Admin</label>
-        <input type="text" id="changePassInput" class="form-control" placeholder="Password baru..." />
-        <button id="savePassBtn" class="btn btn-gold" style="margin-top:10px;">Simpan Password Baru</button>
-      </div>
-      <hr style="margin:24px 0; border-color:var(--border-color);" />
-      <button id="resetDefaultBtn" class="btn btn-outline" style="color:#ef4444; border-color:#ef4444;">
-        <i class="fa-solid fa-rotate-left"></i> Kembalikan Semua Data ke Pengaturan Awal
-      </button>
-    </div>
-  </div>
-
-  <script src="data.js"></script>
-  <script>
-    let data = getSiteData();
-
-    function compressImageFile(file, maxWidth = 900, quality = 0.8) {
-      return new Promise((resolve) => {
-        if (!file) return resolve("");
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            try {
-              const canvas = document.createElement("canvas");
-              let w = img.width, h = img.height;
-              if (w > maxWidth) {
-                h = Math.round((h * maxWidth) / w);
-                w = maxWidth;
-              }
-              canvas.width = w;
-              canvas.height = h;
-              const ctx = canvas.getContext("2d");
-              ctx.drawImage(img, 0, 0, w, h);
-              resolve(canvas.toDataURL("image/jpeg", quality));
-            } catch (err) {
-              resolve(e.target.result);
-            }
-          };
-          img.onerror = () => resolve(e.target.result);
-          img.src = e.target.result;
-        };
-        reader.onerror = () => resolve("");
-        reader.readAsDataURL(file);
-      });
-    }
-
-    const ADMIN_PASS_KEY = "ghof_admin_password";
-    function getAdminPass() {
-      return localStorage.getItem(ADMIN_PASS_KEY) || "ghof2026";
-    }
-
-    document.getElementById("loginBtn").onclick = () => {
-      const val = document.getElementById("adminPassInput").value;
-      if (val === getAdminPass()) {
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("adminDashboard").style.display = "block";
-        initAdminForms();
-      } else {
-        alert("Password salah! Coba lagi.");
-      }
-    };
-
-    document.querySelectorAll(".tab-btn").forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-        document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById(btn.dataset.tab).classList.add("active");
-      };
+  function addNewEbook() {
+    data.ebooks.push({
+      id: "eb-" + Date.now(),
+      title: "Judul E-Book Baru",
+      language: "Bahasa Asing",
+      price: "Rp 40.000",
+      bestseller: false,
+      active: true,
+      cover: "ebook-baru.png",
+      description: "Deskripsi singkat e-book..."
     });
+    renderAdminAll();
+  }
 
-    function initAdminForms() {
-      document.getElementById("annActive").checked = data.announcement.active;
-      document.getElementById("annText").value = data.announcement.text;
-
-      renderAdminCourses();
-      document.getElementById("adminCoursesList").insertAdjacentHTML('beforeend', `
-        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kursus
-        </button>
-      `);
-
-      renderAdminEbooks();
-      document.getElementById("adminEbooksList").insertAdjacentHTML('beforeend', `
-        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan E-Book
-        </button>
-      `);
-
-      renderAdminWeb();
-      document.getElementById("adminWebList").insertAdjacentHTML('beforeend', `
-        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Jasa Website
-        </button>
-      `);
-
-      renderAdminPayments();
-      document.getElementById("adminPaymentsList").insertAdjacentHTML('beforeend', `
-        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Pembayaran
-        </button>
-      `);
-
-      renderAdminContacts();
-      document.getElementById("adminContactsList").insertAdjacentHTML('beforeend', `
-        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Kontak
-        </button>
-      `);
-
-      document.getElementById("ownerName").value = data.owner.name;
-      document.getElementById("ownerTitle").value = data.owner.title;
-      document.getElementById("ownerRole").value = data.owner.role;
-      document.getElementById("ownerDesc").value = data.owner.description;
-      document.getElementById("ownerGoal").value = data.owner.goal;
-      document.getElementById("ownerVision").value = data.owner.vision;
-      document.getElementById("ownerMission").value = (data.owner.mission || []).join("\n");
-      if (data.owner.photo) {
-        const prev = document.getElementById("ownerPhotoPreview");
-        prev.src = data.owner.photo;
-        prev.style.display = "block";
-      }
-
-      renderAdminReviews();
-      document.getElementById("adminReviewsList").insertAdjacentHTML('beforeend', `
-        <button class="btn btn-gold" onclick="saveChangesAndAlert()" style="margin-top:16px; width:100%;">
-          <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan Ulasan
-        </button>
-      `);
+  function deleteEbook(idx) {
+    if (confirm("Hapus e-book ini?")) {
+      data.ebooks.splice(idx, 1);
+      renderAdminAll();
     }
+  }
 
-    function renderAdminCourses() {
-      document.getElementById("adminCoursesList").innerHTML = data.courses.map((c, idx) => `
-        <div class="item-box">
-          <h4>${c.name}</h4>
-          <div class="grid-2" style="margin-top:12px;">
-            <div class="form-group">
-              <label>Nama Paket Kursus</label>
-              <input type="text" class="form-control" value="${c.name}" onchange="data.courses[${idx}].name = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Harga Tampil</label>
-              <input type="text" class="form-control" value="${c.price}" onchange="data.courses[${idx}].price = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Harga Coret (Opsional)</label>
-              <input type="text" class="form-control" value="${c.originalPrice || ''}" onchange="data.courses[${idx}].originalPrice = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Upload Foto / Logo Kursus</label>
-              <input type="file" accept="image/*" class="form-control" onchange="uploadCourseImg(event, ${idx})" />
-              ${c.logo ? `<img src="${c.logo}" class="preview-thumb" />` : ''}
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Keterangan Periode / Promo</label>
-            <input type="text" class="form-control" value="${c.period || ''}" onchange="data.courses[${idx}].period = this.value" />
-          </div>
-          <div class="form-group">
-            <label>Deskripsi Kursus</label>
-            <textarea rows="2" class="form-control" onchange="data.courses[${idx}].description = this.value">${c.description}</textarea>
-          </div>
-        </div>
-      `).join('');
+  function addNewWebService() {
+    data.webServices.push({
+      id: "web-" + Date.now(),
+      category: "Kategori Website Baru",
+      price: "Mulai Rp 500.000",
+      image: "web-baru.png",
+      active: true,
+      description: "Deskripsi layanan website..."
+    });
+    renderAdminAll();
+  }
+
+  function deleteWeb(idx) {
+    if (confirm("Hapus layanan website ini?")) {
+      data.webServices.splice(idx, 1);
+      renderAdminAll();
     }
+  }
 
-    async function uploadCourseImg(e, idx) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const base64 = await compressImageFile(file);
-      if (base64) {
-        data.courses[idx].logo = base64;
-        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-        renderAdminCourses();
-        alert("✅ Foto Kursus berhasil dipasang dan langsung tersimpan!");
-      }
+  function addNewPayment() {
+    data.payments.push({
+      id: "pay-" + Date.now(),
+      name: "Metode Baru",
+      number: "08xxxxxxxx",
+      holder: "GHOF KNOWLEDGE",
+      qrisImage: ""
+    });
+    renderAdminAll();
+  }
+
+  function deletePay(idx) {
+    if (confirm("Hapus metode pembayaran ini?")) {
+      data.payments.splice(idx, 1);
+      renderAdminAll();
     }
+  }
 
-    function renderAdminEbooks() {
-      document.getElementById("adminEbooksList").innerHTML = data.ebooks.map((eb, idx) => `
-        <div class="item-box">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <strong>#${idx + 1} — ${eb.title}</strong>
-            <button class="btn btn-outline" style="padding:6px 12px; color:#ef4444;" onclick="data.ebooks.splice(${idx},1); renderAdminEbooks();">
-              <i class="fa-solid fa-trash"></i> Hapus
-            </button>
-          </div>
-          <div class="grid-3">
-            <div class="form-group">
-              <label>Judul</label>
-              <input type="text" class="form-control" value="${eb.title}" onchange="data.ebooks[${idx}].title = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Harga</label>
-              <input type="text" class="form-control" value="${eb.price}" onchange="data.ebooks[${idx}].price = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Upload Cover E-Book</label>
-              <input type="file" accept="image/*" class="form-control" onchange="uploadEbookCover(event, ${idx})" />
-              ${eb.cover ? `<img src="${eb.cover}" class="preview-thumb" />` : ''}
-            </div>
-          </div>
-          <div class="form-group">
-            <label><input type="checkbox" ${eb.bestseller ? 'checked' : ''} onchange="data.ebooks[${idx}].bestseller = this.checked" /> Sematkan Tanda Terlaris</label>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    async function uploadEbookCover(e, idx) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const base64 = await compressImageFile(file);
-      if (base64) {
-        data.ebooks[idx].cover = base64;
-        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-        renderAdminEbooks();
-        alert("✅ Cover E-Book berhasil dipasang dan langsung tersimpan!");
-      }
-    }
-
-    document.getElementById("addEbookBtn").onclick = async () => {
-      const title = document.getElementById("newEbTitle").value.trim();
-      const language = document.getElementById("newEbLang").value.trim() || "Bahasa Asing";
-      const price = document.getElementById("newEbPrice").value.trim() || "Rp 45.000";
-      const description = document.getElementById("newEbDesc").value.trim();
-      const bestseller = document.getElementById("newEbBest").checked;
-      const file = document.getElementById("newEbCover").files[0];
-      if (!title) return alert("Judul E-Book wajib diisi!");
-      const cover = await compressImageFile(file);
-      data.ebooks.unshift({ id: "eb-" + Date.now(), title, language, price, bestseller, cover, description });
-      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-      document.getElementById("newEbTitle").value = "";
-      document.getElementById("newEbDesc").value = "";
-      renderAdminEbooks();
-      alert("✅ E-Book berhasil ditambahkan dan disimpan!");
+  function saveData() {
+    data.announcement = {
+      text: document.getElementById('annText').value,
+      active: document.getElementById('annActive').checked
     };
+    localStorage.setItem("ghof_knowledge_data_v3", JSON.stringify(data));
+    alert("✅ Perubahan berhasil disimpan! Jangan lupa klik 'Download data.js Terbaru' lalu upload ke GitHub agar konek ke link publik.");
+  }
 
-    function renderAdminWeb() {
-      document.getElementById("adminWebList").innerHTML = data.webServices.map((ws, idx) => `
-        <div class="item-box">
-          <h4>${ws.category}</h4>
-          <div class="grid-2" style="margin-top:10px;">
-            <div class="form-group">
-              <label>Kategori Website</label>
-              <input type="text" class="form-control" value="${ws.category}" onchange="data.webServices[${idx}].category = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Harga / Mulai Dari</label>
-              <input type="text" class="form-control" value="${ws.price}" onchange="data.webServices[${idx}].price = this.value" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Upload Foto Contoh Website</label>
-            <input type="file" accept="image/*" class="form-control" onchange="uploadWebImg(event, ${idx})" />
-            ${ws.image ? `<img src="${ws.image}" class="preview-thumb" />` : ''}
-          </div>
-          <div class="form-group">
-            <label>Deskripsi Layanan</label>
-            <textarea rows="2" class="form-control" onchange="data.webServices[${idx}].description = this.value">${ws.description}</textarea>
-          </div>
-        </div>
-      `).join('');
-    }
+  function downloadUpdatedDataJs() {
+    saveData();
+    const content = `// Pusat Data GHOF KNOWLEDGE (Auto-Generated)
+const DEFAULT_DATA = ${JSON.stringify(data, null, 2)};
 
-    async function uploadWebImg(e, idx) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const base64 = await compressImageFile(file);
-      if (base64) {
-        data.webServices[idx].image = base64;
-        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-        renderAdminWeb();
-        alert("✅ Foto Jasa Website berhasil dipasang dan langsung tersimpan!");
-      }
-    }
+function getSiteData() {
+  try {
+    const saved = localStorage.getItem("ghof_knowledge_data_v3");
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+`;
+    const blob = new Blob([content], { type: "application/javascript" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "data.js";
+    a.click();
+  }
 
-    function renderAdminPayments() {
-      document.getElementById("adminPaymentsList").innerHTML = data.payments.map((p, idx) => `
-        <div class="item-box">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <strong>${p.name}</strong>
-            <button class="btn btn-outline" style="padding:6px 12px; color:#ef4444;" onclick="data.payments.splice(${idx},1); renderAdminPayments();">
-              <i class="fa-solid fa-trash"></i> Hapus
-            </button>
-          </div>
-          <div class="grid-3">
-            <div class="form-group">
-              <label>Nama Metode</label>
-              <input type="text" class="form-control" value="${p.name}" onchange="data.payments[${idx}].name = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Nomor / Keterangan</label>
-              <input type="text" class="form-control" value="${p.number}" onchange="data.payments[${idx}].number = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Upload Foto QRIS</label>
-              <input type="file" accept="image/*" class="form-control" onchange="uploadQrisImg(event, ${idx})" />
-              ${p.qrisImage ? `<img src="${p.qrisImage}" class="preview-thumb" />` : ''}
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    async function uploadQrisImg(e, idx) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const base64 = await compressImageFile(file);
-      if (base64) {
-        data.payments[idx].qrisImage = base64;
-        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-        renderAdminPayments();
-        alert("✅ Foto QRIS berhasil dipasang dan langsung tersimpan!");
-      }
-    }
-
-    document.getElementById("addPayBtn").onclick = () => {
-      const name = document.getElementById("newPayName").value.trim();
-      const number = document.getElementById("newPayNum").value.trim();
-      if (!name || !number) return alert("Nama metode dan nomor wajib diisi!");
-      data.payments.push({ id: "pay-" + Date.now(), name, number, holder: "GHOF KNOWLEDGE", qrisImage: "" });
-      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-      document.getElementById("newPayName").value = "";
-      document.getElementById("newPayNum").value = "";
-      renderAdminPayments();
-      alert("✅ Metode pembayaran berhasil ditambah!");
-    };
-
-    function renderAdminContacts() {
-      document.getElementById("adminContactsList").innerHTML = data.contacts.map((c, idx) => `
-        <div class="item-box">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <strong>${c.platform}</strong>
-            <button class="btn btn-outline" style="padding:6px 12px; color:#ef4444;" onclick="data.contacts.splice(${idx},1); renderAdminContacts();">
-              <i class="fa-solid fa-trash"></i> Hapus
-            </button>
-          </div>
-          <div class="grid-3">
-            <div class="form-group">
-              <label>Platform</label>
-              <input type="text" class="form-control" value="${c.platform}" onchange="data.contacts[${idx}].platform = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Nomor / Username</label>
-              <input type="text" class="form-control" value="${c.value}" onchange="data.contacts[${idx}].value = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Link URL</label>
-              <input type="text" class="form-control" value="${c.link}" onchange="data.contacts[${idx}].link = this.value" />
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    document.getElementById("addContactBtn").onclick = () => {
-      const platform = document.getElementById("newContactPlat").value.trim();
-      const value = document.getElementById("newContactVal").value.trim();
-      const link = document.getElementById("newContactLink").value.trim() || "#";
-      if (!platform || !value) return alert("Platform dan username/nomor wajib diisi!");
-      data.contacts.push({ id: "c-" + Date.now(), platform, value, link, icon: "fa-solid fa-share-nodes" });
-      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-      document.getElementById("newContactPlat").value = "";
-      document.getElementById("newContactVal").value = "";
-      document.getElementById("newContactLink").value = "";
-      renderAdminContacts();
-      alert("✅ Kontak berhasil ditambah!");
-    };
-
-    document.getElementById("ownerPhotoInput").onchange = async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const base64 = await compressImageFile(file);
-      if (base64) {
-        data.owner.photo = base64;
-        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-        const prev = document.getElementById("ownerPhotoPreview");
-        prev.src = base64;
-        prev.style.display = "block";
-        alert("✅ Foto CEO berhasil dipasang dan langsung tersimpan!");
-      }
-    };
-
-    function renderAdminReviews() {
-      document.getElementById("adminReviewsList").innerHTML = data.reviews.map((r, idx) => `
-        <div class="item-box">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-            <strong>${r.name} (${r.rating} ★)</strong>
-            <button class="btn btn-outline" style="padding:6px 12px; color:#ef4444;" onclick="data.reviews.splice(${idx},1); renderAdminReviews();">
-              <i class="fa-solid fa-trash"></i> Hapus
-            </button>
-          </div>
-          <div class="grid-3">
-            <div class="form-group">
-              <label>Nama</label>
-              <input type="text" class="form-control" value="${r.name}" onchange="data.reviews[${idx}].name = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Kategori</label>
-              <input type="text" class="form-control" value="${r.category}" onchange="data.reviews[${idx}].category = this.value" />
-            </div>
-            <div class="form-group">
-              <label>Bintang (1-5)</label>
-              <input type="number" min="1" max="5" class="form-control" value="${r.rating}" onchange="data.reviews[${idx}].rating = Number(this.value)" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Komentar</label>
-            <textarea rows="2" class="form-control" onchange="data.reviews[${idx}].comment = this.value">${r.comment}</textarea>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    document.getElementById("addRevBtn").onclick = () => {
-      const name = document.getElementById("newRevName").value.trim();
-      const category = document.getElementById("newRevCat").value;
-      const rating = Number(document.getElementById("newRevStars").value);
-      const comment = document.getElementById("newRevComment").value.trim();
-      if (!name || !comment) return alert("Nama dan komentar wajib diisi!");
-      data.reviews.unshift({ id: "rev-" + Date.now(), name, category, rating, comment });
-      localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-      document.getElementById("newRevName").value = "";
-      document.getElementById("newRevComment").value = "";
-      renderAdminReviews();
-      alert("✅ Ulasan berhasil ditambah!");
-    };
-
-    function syncFormFieldsToData() {
-      data.announcement.active = document.getElementById("annActive").checked;
-      data.announcement.text = document.getElementById("annText").value;
-      data.owner.name = document.getElementById("ownerName").value;
-      data.owner.title = document.getElementById("ownerTitle").value;
-      data.owner.role = document.getElementById("ownerRole").value;
-      data.owner.description = document.getElementById("ownerDesc").value;
-      data.owner.goal = document.getElementById("ownerGoal").value;
-      data.owner.vision = document.getElementById("ownerVision").value;
-      data.owner.mission = document.getElementById("ownerMission").value.split("\n").map(s => s.trim()).filter(Boolean);
-    }
-
-    function saveChangesAndAlert() {
-      try {
-        syncFormFieldsToData();
-        localStorage.setItem("ghof_knowledge_data_v2", JSON.stringify(data));
-        alert("✅ Berhasil disimpan secara permanen!");
-      } catch (err) {
-        alert("⚠️ Gagal menyimpan, ukuran file terlalu besar.");
-      }
-    }
-
-    document.getElementById("savePassBtn").onclick = () => {
-      const p = document.getElementById("changePassInput").value.trim();
-      if (p.length < 4) return alert("Password minimal 4 karakter!");
-      localStorage.setItem(ADMIN_PASS_KEY, p);
-      alert("✅ Password admin berhasil diperbarui!");
-    };
-
-    document.getElementById("resetDefaultBtn").onclick = () => {
-      if (confirm("Yakin ingin mereset semua data ke pengaturan awal?")) {
-        localStorage.removeItem("ghof_knowledge_data_v2");
-        location.reload();
-      }
-    };
-  </script>
+  renderAdminAll();
+</script>
 </body>
 </html>
