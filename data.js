@@ -5,7 +5,7 @@ const DEFAULT_DATA = {
     text: "🔥 PROMO PEMBUKAAN GHOF RUSSIAN CLASS! Kelas Berbayar hanya Rp39.000/bulan (minimal 3 bulan = Rp117.000) dari harga normal Rp59.000/bulan! Periode: 15 Nov 2026 – 28 Nov 2027. Daftar sekarang!"
   },
   owner: {
-    name: "LABIIB AL GHOFFUUR",
+    name: "ERLANGGA ANGGA",
     title: "Mntr.Br, Bs, Bt",
     role: "CEO GHOF KNOWLEDGE • Mentor Bahasa Rusia, Spanyol & Turki",
     photo: "ceo-profile.png",
