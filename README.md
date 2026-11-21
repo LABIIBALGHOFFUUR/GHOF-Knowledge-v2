@@ -17,3 +17,5 @@ Website resmi **GHOF KNOWLEDGE** (*GHOF Language Academy & Digital Solutions*) y
 1. Login ke `admin.html`, upload foto atau edit produk/harga sesuai keinginan.
 2. Klik tombol **Download data.js untuk GitHub**.
 3. Upload file `data.js` hasil unduhan tersebut ke repositori GitHub kamu untuk menggantikan file `data.js` yang lama.
+4. hasilnya di bawah ini
+   https://labiibalghoffuur.github.io/GHOF-Knowledge-v2/
